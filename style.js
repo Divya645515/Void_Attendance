@@ -44,3 +44,4 @@ let students=[{
         attendance : 0 //0=> absent 1=> present 2=> halfday
     },
 ]
+let add = document.getElementById("add");

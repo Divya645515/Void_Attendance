@@ -1,47 +1,172 @@
-let students=[{
-        sid : 101,
-        sname : "divya M",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 102,
-        sname : "Honey",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 103,
-        sname : "Jayath",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 104,
-        sname : "Mani parasad",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 105,
-        sname : "Om parasad",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 106,
-        sname : "Rohithashwa R",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 107,
-        sname : "Lion King",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 108,
-        sname : "Man",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-    {
-        sid : 109,
-        sname : "Rohan",
-        attendance : 0 //0=> absent 1=> present 2=> halfday
-    },
-]
-let add = document.getElementById("add");
+
+    let students = ["Alice", "Bob", "Charlie"];
+    const attendanceData = {};
+    const table = document.getElementById("attendanceTable");
+    const monthSelect = document.getElementById("monthSelect");
+
+    const attendanceStates = ["absent", "present", "late"];
+    const stateLabels = { absent: "A", present: "P", late: "L" };
+
+    // Populate months dropdown
+    function loadMonthOptions() {
+      const now = new Date();
+      for (let m = 0; m < 12; m++) {
+        const date = new Date(now.getFullYear(), m);
+        const monthStr = date.toLocaleString("default", { month: "long" });
+        const option = document.createElement("option");
+        option.value = m;
+        option.textContent = monthStr;
+        if (m === now.getMonth()) option.selected = true;
+        monthSelect.appendChild(option);
+      }
+    }
+
+    function getDaysInMonth(year, month) {
+      return new Date(year, month + 1, 0).getDate();
+    }
+
+    function buildTable() {
+      const year = new Date().getFullYear();
+      const month = parseInt(monthSelect.value);
+      const days = getDaysInMonth(year, month);
+
+      const key = `${year}-${month}`;
+      if (!attendanceData[key]) {
+        attendanceData[key] = {};
+        for (let name of students) {
+          attendanceData[key][name] = Array(days).fill("absent");
+        }
+      }
+
+      const data = attendanceData[key];
+
+      table.innerHTML = "";
+
+      // Header row
+      const header = table.insertRow();
+      header.insertCell().outerHTML = "<th class='name-col'>Name</th>";
+      for (let d = 1; d <= days; d++) {
+        header.insertCell().outerHTML = `<th>${d}</th>`;
+      }
+
+      // Attendance rows
+      for (let i = 0; i < students.length; i++) {
+        const row = table.insertRow();
+        row.insertCell().outerHTML = `<td class='name-col'>${students[i]}</td>`;
+
+        for (let d = 0; d < days; d++) {
+          const cell = row.insertCell();
+          const status = data[students[i]][d];
+          cell.className = status;
+          cell.textContent = stateLabels[status];
+          cell.addEventListener("click", () => {
+            let idx = attendanceStates.indexOf(data[students[i]][d]);
+            idx = (idx + 1) % attendanceStates.length;
+            data[students[i]][d] = attendanceStates[idx];
+            buildTable();
+          });
+        }
+      }
+
+      // Footer row with counts
+      const summary = table.insertRow();
+      summary.insertCell().outerHTML = "<td class='name-col'><b>Summary</b></td>";
+      for (let d = 0; d < days; d++) {
+        let present = 0;
+        for (let s of students) {
+          if (data[s][d] === "present") present++;
+        }
+        const total = students.length;
+        const percent = Math.round((present / total) * 100);
+        summary.insertCell().innerHTML = `<b>${present}/${total}<br>${percent}%</b>`;
+      }
+
+      updateChart(data, days);
+    }
+
+    function updateChart(data, days) {
+      let totalPresent = 0, totalAbsent = 0, totalLate = 0;
+      for (let s of students) {
+        for (let d = 0; d < days; d++) {
+          const state = data[s][d];
+          if (state === "present") totalPresent++;
+          if (state === "absent") totalAbsent++;
+          if (state === "late") totalLate++;
+        }
+      }
+
+      const ctx = document.getElementById("chart").getContext("2d");
+      if (window.chartInstance) window.chartInstance.destroy();
+      window.chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Present", "Absent", "Late"],
+          datasets: [{
+            label: 'Attendance Summary',
+            data: [totalPresent, totalAbsent, totalLate],
+            backgroundColor: ["#5cb85c", "#d9534f", "#f0ad4e"]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+
+   function addStudent() {
+  const name = prompt("Enter student name:");
+  if (name && !students.includes(name)) {
+    students.push(name);
+    const year = new Date().getFullYear();
+    const month = parseInt(monthSelect.value);
+    const days = getDaysInMonth(year, month);
+    const key = `${year}-${month}`;
+
+    // Ensure attendanceData has entry for this month
+    if (!attendanceData[key]) {
+      attendanceData[key] = {};
+    }
+
+    // Add default attendance for the new student
+    attendanceData[key][name] = Array(days).fill("absent");
+
+    buildTable();
+  }
+}
+
+
+   function removeStudent() {
+  const name = prompt("Enter the name of the student to remove:");
+  if (!name) return;
+
+  const index = students.indexOf(name);
+  if (index === -1) {
+    alert("Student not found.");
+    return;
+  }
+
+  // Remove from students array
+  students.splice(index, 1);
+
+  // Remove from all months' attendance
+  for (const monthKey in attendanceData) {
+    if (attendanceData[monthKey][name]) {
+      delete attendanceData[monthKey][name];
+    }
+  }
+
+  buildTable();
+}
+
+    
+
+    monthSelect.addEventListener("change", buildTable);
+
+    // Initialize
+    loadMonthOptions();
+    buildTable();
+  
+

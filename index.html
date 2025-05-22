@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
+  <div class="header">
     <h2>Attendance Tracker</h2>
     <div>
       <label for="monthSelect">Select Month:</label>
       <select id="monthSelect"></select>
-      <button id="add">Add Student</button>
-      <button id="remove">Remove  Student</button>
+      <button onclick="addStudent()">Add Student</button>
+      <button onclick="removeStudent()">Remove  Student</button>
     </div>
   </div>
-  <script src="style.js"></script>
+
   <table id="attendanceTable"></table>
 
   <canvas id="chart" width="400" height="200"></canvas>
+  <script src="style.js"></script>
 </body>
 </html>

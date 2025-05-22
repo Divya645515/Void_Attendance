@@ -1,5 +1,5 @@
 
-    let students = ["Alice", "Bob", "Charlie"];
+    let students = ["Divya", "Mani Prasad", "Rohit Ashwa", "Honey Shetty", "Om Prasad", "Jayanth"];
     const attendanceData = {};
     const table = document.getElementById("attendanceTable");
     const monthSelect = document.getElementById("monthSelect");
@@ -7,7 +7,7 @@
     const attendanceStates = ["absent", "present", "late"];
     const stateLabels = { absent: "A", present: "P", late: "L" };
 
-    // Populate months dropdown
+    
     function loadMonthOptions() {
       const now = new Date();
       for (let m = 0; m < 12; m++) {
@@ -41,15 +41,13 @@
       const data = attendanceData[key];
 
       table.innerHTML = "";
-
-      // Header row
       const header = table.insertRow();
       header.insertCell().outerHTML = "<th class='name-col'>Name</th>";
       for (let d = 1; d <= days; d++) {
         header.insertCell().outerHTML = `<th>${d}</th>`;
       }
 
-      // Attendance rows
+      
       for (let i = 0; i < students.length; i++) {
         const row = table.insertRow();
         row.insertCell().outerHTML = `<td class='name-col'>${students[i]}</td>`;
@@ -68,7 +66,7 @@
         }
       }
 
-      // Footer row with counts
+     
       const summary = table.insertRow();
       summary.insertCell().outerHTML = "<td class='name-col'><b>Summary</b></td>";
       for (let d = 0; d < days; d++) {
@@ -125,12 +123,12 @@
     const days = getDaysInMonth(year, month);
     const key = `${year}-${month}`;
 
-    // Ensure attendanceData has entry for this month
+  
     if (!attendanceData[key]) {
       attendanceData[key] = {};
     }
 
-    // Add default attendance for the new student
+
     attendanceData[key][name] = Array(days).fill("absent");
 
     buildTable();
@@ -148,10 +146,10 @@
     return;
   }
 
-  // Remove from students array
+  
   students.splice(index, 1);
 
-  // Remove from all months' attendance
+
   for (const monthKey in attendanceData) {
     if (attendanceData[monthKey][name]) {
       delete attendanceData[monthKey][name];
@@ -165,7 +163,7 @@
 
     monthSelect.addEventListener("change", buildTable);
 
-    // Initialize
+  
     loadMonthOptions();
     buildTable();
   

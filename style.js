@@ -14,6 +14,22 @@ let t_head = document.querySelector(".table_heads");
 let t_body = document.querySelector(".t_body");
 let j = 0;
 
+
+
+// Check for new student added via add_student.html
+const newStudentData = localStorage.getItem("newStudent");
+if (newStudentData) {
+  const newStd = JSON.parse(newStudentData);
+  const exists = students.some(s => s.sid.toString() === newStd.sid.toString());
+  if (!exists) {
+    students.push(newStd);
+    localStorage.setItem("studentList", JSON.stringify(students));
+  }
+  localStorage.removeItem("newStudent"); // Clear temp data
+}
+
+
+
 addStudent(0);
 
 function month() {

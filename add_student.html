@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Student</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .add-student-form {
+      width: 300px;
+      margin: 100px auto;
+      padding: 20px;
+      border: 2px solid #007bff;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .add-student-form h3 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .add-student-form input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .add-student-form button {
+      width: 95%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .add-student-form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="add-student-form">
+    <h3>Add Student</h3>
+    <input type="text" id="name" placeholder="Enter name" />
+    <input type="text" id="usn" placeholder="Enter ID" />
+    <button onclick="newStudent()">Submit</button>
+  </div>
+
+  <script>
+    function newStudent() {
+      const usn = document.getElementById("usn").value.trim();
+      const name = document.getElementById("name").value.trim();
+
+      if (!usn || !name) {
+        alert("Please enter both ID and Name.");
+        return;
+      }
+
+      const newStudent = { sid: usn, sname: name };
+      localStorage.setItem("newStudent", JSON.stringify(newStudent));
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

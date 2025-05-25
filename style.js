@@ -3,41 +3,49 @@ let students = [{
     sname: "divya M",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 102,
     sname: "Honey",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 103,
     sname: "Jayath",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 104,
     sname: "Mani parasad",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 105,
     sname: "Om parasad",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 106,
     sname: "Rohithashwa R",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 107,
     sname: "Lion King",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 108,
     sname: "Man",
     attendance: 0 //0=> absent 1=> present 2=> halfday
 },
+
 {
     sid: 109,
     sname: "Rohan",
@@ -94,15 +102,13 @@ function addStudent(mn) {
     students.map((std) => {
         t_body.innerHTML +=
             `<td>${std.sid}</td><td>${std.sname}</td>
-    ${'<td><select class = "attendance"><option value="">A</option><option value="P">P</option><option value="A">A</option></select></td>'.repeat(mn)}`
+    ${'<td><select class = "attendance"><option value="">A</option><option value="P">P</option><option value="A">L</option></select></td>'.repeat(mn)}`
     })
 }
 
 function print() {
     let table = document.getElementById("A_table")
-
     let t_body2 = document.getElementsByClassName("t_body2")[0]
-
     let rows = table.rows
     let count = []
 
@@ -118,7 +124,6 @@ function print() {
     let op = "<tr><td>count</td><td></td>"
     for (let i = 0; i <= j - 1; i++)
         op += `<span><td>${count[i + 2]} </td></span>`
-
     op += "</tr>"
     t_body2.innerHTML = op;
 }

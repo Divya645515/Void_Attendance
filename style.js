@@ -1,143 +1,109 @@
-let students = [{
-    sid: 101,
-    sname: "divya M",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
+let students = [
+  { sid: 101, sname: "Divya M" },
+  { sid: 102, sname: "Honey" },
+  { sid: 103, sname: "Jayath" },
+  { sid: 104, sname: "Mani Parasad" },
+  { sid: 105, sname: "Om Parasad" },
+  { sid: 106, sname: "Rohithashwa R" },
+  { sid: 107, sname: "Lion King" },
+  { sid: 108, sname: "Man" },
+  { sid: 109, sname: "Rohan" },
+];
 
-{
-    sid: 102,
-    sname: "Honey",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
+let t_head = document.querySelector(".table_heads");
+let t_body = document.querySelector(".t_body");
+let j = 0;
 
-{
-    sid: 103,
-    sname: "Jayath",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
+addStudent(0);
 
-{
-    sid: 104,
-    sname: "Mani parasad",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
-
-{
-    sid: 105,
-    sname: "Om parasad",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
-
-{
-    sid: 106,
-    sname: "Rohithashwa R",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
-
-{
-    sid: 107,
-    sname: "Lion King",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
-
-{
-    sid: 108,
-    sname: "Man",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
-
-{
-    sid: 109,
-    sname: "Rohan",
-    attendance: 0 //0=> absent 1=> present 2=> halfday
-},
-]
-
-
-let t_head = document.getElementsByClassName("table_heads")[0]
-
-let t_body = document.getElementsByClassName("t_body")[0]
-let j = 0
-
-addStudent(0)
 function month() {
-    t_head.innerHTML = "<th>ID</th><th>Name</th>";
-    t_body.innerHTML = "";
-    let mn = document.getElementById("mn").value
+  const mn = parseInt(document.getElementById("mn").value);
+  t_head.innerHTML = "<th>ID</th><th>Name</th>";
+  t_body.innerHTML = "";
 
-    if (mn < 13 && mn > 0) {
-        if (mn == 1 || mn == 3 || mn == 5 || mn == 7 || mn == 8 || mn == 10 || mn == 12) {
-            j = 31
-            for (let i = 1; i < 32; i++) {
-                t_head.innerHTML += `<th id="d${i}">Day ${i}</th>`;
+  if (mn >= 1 && mn <= 12) {
+    if ([1, 3, 5, 7, 8, 10, 12].includes(mn)) j = 31;
+    else if (mn === 2) j = 28;
+    else j = 30;
 
-            }
-            addStudent(j)
-        }
-        else if (mn == 2) {
-            j = 28
-            for (let i = 1; i < 29; i++) {
-                t_head.innerHTML += `<th id="d${i}">Day ${i}</th>`;
-            }
-            addStudent(j)
-        }
-        else {
-            j = 30
-            for (let i = 1; i < 31; i++) {
-                t_head.innerHTML += `<th id="d${i}">Day ${i}</th>`;
-            }
-            addStudent(j)
-        }
+    for (let i = 1; i <= j; i++) {
+      t_head.innerHTML += `<th>Day ${i}</th>`;
     }
-    else {
-        alert("enter valid month")
-        t_body.innerHTML = ""
-        addStudent(0)
-    }
-
+    addStudent(j);
+  } else {
+    alert("Enter a valid month (1–12)");
+    addStudent(0);
+  }
 }
 
-
-function addStudent(mn) {
-    students.map((std) => {
-        t_body.innerHTML +=
-            `<td>${std.sid}</td><td>${std.sname}</td>
-    ${'<td><select class = "attendance"><option value="">A</option><option value="P">P</option><option value="A">L</option></select></td>'.repeat(mn)}`
-    })
+function addStudent(days) {
+  t_body.innerHTML = "";
+  students.forEach((std) => {
+    let row = `<tr><td>${std.sid}</td><td>${std.sname}</td>`;
+    for (let i = 1; i <= days; i++) {
+      row += `<td><select class="attendance">
+                <option value="">A</option>
+                <option value="P">P</option>
+                <option value="L">L</option>
+              </select></td>`;
+    }
+    row += "</tr>";
+    t_body.innerHTML += row;
+  });
 }
 
 function print() {
-    let table = document.getElementById("A_table")
-    let t_body2 = document.getElementsByClassName("t_body2")[0]
-    let rows = table.rows
-    let count = []
+  const table = document.getElementById("A_table");
+  const t_body2 = document.querySelector(".t_body2");
+  const rows = table.rows;
+  let count = [];
 
-    for (let i = 2; i <= j + 1; i++) {
-        count[i] = 0
-        for (let j = 1; j < students.length; j++) {
-            let cell = rows[j].cells[i].querySelector("select");
-            if (cell.value === "P")
-                count[i]++;
-        }
+  for (let i = 2; i <= j + 1; i++) {
+    count[i] = 0;
+    for (let r = 1; r <= students.length; r++) {
+      let cell = rows[r].cells[i]?.querySelector("select");
+      if (cell?.value === "P") count[i]++;
     }
+  }
 
-    let op = "<tr><td>count</td><td></td>"
-    for (let i = 0; i <= j - 1; i++)
-        op += `<span><td>${count[i + 2]} </td></span>`
-    op += "</tr>"
-    t_body2.innerHTML = op;
+  let op = "<tr><td>Count</td><td></td>";
+  for (let i = 0; i < j; i++) {
+    op += `<td>${count[i + 2] || 0}</td>`;
+  }
+  op += "</tr>";
+  t_body2.innerHTML = op;
 }
 
 function newStudent() {
-    const usn = document.getElementById("usn").value.trim();
-    const name = document.getElementById("name").value.trim();
-    if (usn === "" || name === "") {
-      alert("Please enter both USN and Name.");
-      return;
-    }
+  const usn = document.getElementById("usn").value.trim();
+  const name = document.getElementById("name").value.trim();
 
-    
-    const newStudent = { usn, name };
-    students.push(newStudent);
-    console.log(students)
+  if (usn === "" || name === "") {
+    alert("Please enter both ID and Name.");
+    return;
+  }
+
+  if (students.some(s => s.sid.toString() === usn)) {
+    alert("Student ID already exists.");
+    return;
+  }
+
+  students.push({ sid: usn, sname: name });
+  addStudent(j); // Refresh table with new student
+  document.getElementById("usn").value = "";
+  document.getElementById("name").value = "";
+}
+
+function removeStudent() {
+  const sidToRemove = prompt("Enter ID of student to remove:");
+  if (!sidToRemove) return;
+
+  const index = students.findIndex(s => s.sid.toString() === sidToRemove);
+  if (index === -1) {
+    alert("Student ID not found.");
+    return;
+  }
+
+  students.splice(index, 1);
+  addStudent(j); // Refresh table
 }

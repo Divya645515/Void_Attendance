@@ -41,8 +41,8 @@ function addStudent(days) {
   students.forEach((std) => {
     let row = `<tr><td>${std.sid}</td><td>${std.sname}</td>`;
     for (let i = 1; i <= days; i++) {
-      row += `<td><select class="attendance">
-                <option value="">A</option>
+      row += `<td><select class="attendance" onchange="updateCellStyle(this)">
+                <option value="A">A</option>
                 <option value="P">P</option>
                 <option value="L">L</option>
               </select></td>`;
@@ -50,6 +50,21 @@ function addStudent(days) {
     row += "</tr>";
     t_body.innerHTML += row;
   });
+}
+function updateCellStyle(selectElement) {
+  const td = selectElement.parentElement;
+
+  // Remove any previous class
+  td.classList.remove("present", "absent", "late");
+
+  // Add new class based on value
+  if (selectElement.value === "P") {
+    td.classList.add("present");
+  } else if (selectElement.value === "A" ) {
+    td.classList.add("absent");
+  } else if (selectElement.value === "L") {
+    td.classList.add("late");
+  }
 }
 
 function print() {

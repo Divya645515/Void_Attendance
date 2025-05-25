@@ -11,14 +11,25 @@
     <h2>Attendance Tracker</h2>
     <div>
       <label for="monthSelect">Select Month:</label>
-      <select id="monthSelect"></select>
-      <button onclick="addStudent()">Add Student</button>
+      <input type="number" name="" placeholder="0"  id="mn">
+      <button onclick="month()">get Days</button>
+      <button><a href="addstd.html">add Student</a></button>
       <button onclick="removeStudent()">Remove  Student</button>
     </div>
   </div>
-  <script src="style.js"></script>
-  <table id="attendanceTable"></table>
+  
+  <table border="1" id="A_table">
+    <tr class="table_heads">
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+    <tbody class="t_body"></tbody>
+    <tbody class="t_body2"></tbody>
+  </table>
 
-  <canvas id="chart" width="400" height="200"></canvas>
+  <!-- <canvas id="chart" width="400" height="200"></canvas> -->
+   <button onclick="print()">Count</button>
+
+  <script src="style.js" defer></script>
 </body>
 </html>

@@ -1,9 +1,13 @@
+body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
 
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 20px;
-    background-color: #f0f0f0;
-  }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
   .header {
     display: flex;
@@ -17,43 +21,34 @@
     margin-bottom: 20px;
   }
 
-  .header h2 {
-    margin: 0;
-    font-size: 24px;
-  }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
 
-  .header div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
 
-  select, button {
-    padding: 6px 10px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
+    th.name-col, td.name-col {
+      text-align: left;
+      background-color: #f0f0f0;
+    }
 
-  button {
-    background-color: #e7f0ff;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+    .present {
+      background-color: #c8f7c5;
+    }
 
-  button:hover {
-    background-color: #c8dfff;
-  }
+    .absent {
+      background-color: #f7c5c5;
+    }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 0 8px rgba(0,0,0,0.05);
-    border-radius: 8px;
-    overflow: hidden;
-    text-align: center;
-  }
+    .late {
+      background-color: #fdf5c5;
+    }
 
   table th, table td {
     padding: 4px;

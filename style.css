@@ -65,13 +65,13 @@ td.name-col {
   text-align: left;
 }
 .present {
-  background-color: #1c5718; /* Green */
+  background-color: lawngreen; /* Green */
 }
 .absent {
   background-color: red!important; /* Red */
 }
 .late {
-  background-color: #736515; /* Yellow */
+  background-color: yellow; /* Yellow */
 }
 
 

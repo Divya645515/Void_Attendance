@@ -58,6 +58,7 @@ function addStudent(days) {
     let row = `<tr><td>${std.sid}</td><td>${std.sname}</td>`;
     for (let i = 1; i <= days; i++) {
       row += `<td><select class="attendance" onchange="updateCellStyle(this)">
+                <option value="B">-</option>
                 <option value="A">A</option>
                 <option value="P">P</option>
                 <option value="L">L</option>
@@ -93,13 +94,13 @@ function print() {
     count[i] = 0;
     for (let r = 1; r <= students.length; r++) {
       let cell = rows[r].cells[i]?.querySelector("select");
-      if (cell?.value === "P") count[i]++;
+      if (cell?.value === "P" ||cell?.value === "L") count[i]++;
     }
   }
 
   let op = "<tr><td>Count</td><td></td>";
   for (let i = 0; i < j; i++) {
-    op += `<td>${count[i + 2] || 0}</td>`;
+    op += `<td>${count[i + 2] || 0}/${students.length}</td>`;
   }
   op += "</tr>";
   t_body2.innerHTML = op;

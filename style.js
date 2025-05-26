@@ -33,9 +33,13 @@ if (newStudentData) {
 addStudent(0);
 
 function month() {
-  const mn = parseInt(document.getElementById("mn").value);
+  let mn = (document.getElementById("mn").value);
   t_head.innerHTML = "<th>ID</th><th>Name</th>";
   t_body.innerHTML = "";
+
+  let mon = mn.split("-")
+  mn = parseInt(mon[1]);
+ 
 
   if (mn >= 1 && mn <= 12) {
     if ([1, 3, 5, 7, 8, 10, 12].includes(mn)) j = 31;
@@ -47,7 +51,7 @@ function month() {
     }
     addStudent(j);
   } else {
-    alert("Enter a valid month (1–12)");
+    alert("Please select the month");
     addStudent(0);
   }
 }

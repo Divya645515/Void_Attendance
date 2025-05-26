@@ -65,7 +65,8 @@ td.name-col {
   text-align: left;
 }
 .present {
-  background-color: lawngreen; /* Green */
+  background-color: lawngreen;
+  /* Green */
 }
 .absent {
   background-color: red!important; /* Red */

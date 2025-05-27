@@ -8,6 +8,7 @@ let students = [
   { sid: 107, sname: "Lion King" },
   { sid: 108, sname: "Man" },
   { sid: 109, sname: "Rohan" },
+  {sid:110,sname:"G Charan"},
 ];
 
 let t_head = document.querySelector(".table_heads");

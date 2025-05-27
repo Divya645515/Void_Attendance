@@ -1,9 +1,9 @@
 let students = [
   { sid: 101, sname: "Divya M" },
   { sid: 102, sname: "Honey" },
-  { sid: 103, sname: "Jayath" },
-  { sid: 104, sname: "Mani Parasad" },
-  { sid: 105, sname: "Om Parasad" },
+  { sid: 103, sname: "Jayanth" },
+  { sid: 104, sname: "Mani Prasad" },
+  { sid: 105, sname: "Om Prasad" },
   { sid: 106, sname: "Rohithashwa R" },
   { sid: 107, sname: "Lion King" },
   { sid: 108, sname: "Man" },
@@ -97,8 +97,8 @@ function print() {
   for (let i = 2; i <= j + 1; i++) {
     count[i] = 0;
     for (let r = 1; r <= students.length; r++) {
-      let cell = rows[r].cells[i]?.querySelector("select");
-      if (cell?.value === "P" ||cell?.value === "L") count[i]++;
+      let cell = rows[r].cells[i].querySelector("select");
+      if (cell.value === "P" ||cell.value === "L") count[i]++;
     }
   }
 
